@@ -1,0 +1,2 @@
+Command do not exit in environement path.
+No such file or directoryNo such file or directory
