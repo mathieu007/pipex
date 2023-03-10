@@ -1,0 +1,23 @@
+{
+    "configurations": [
+               {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/include/",
+                "${workspaceFolder}/src/pipex/",
+                "${workspaceFolder}/src/common/",
+				"${workspaceFolder}/libft/include",
+                "${workspaceFolder}/libft/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64"
+        }
+    ],
+    "version": 4
+}

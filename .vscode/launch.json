@@ -1,0 +1,36 @@
+{
+    "configurations": [        
+        {
+            "name": "pipex",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/pipex",
+            "stopAtEntry": false,
+            "args": [
+                "infile", "grep Hello", "wc -l", "outfile"
+            ],
+           
+            "cwd": "${fileDirname}",
+            "environment": [],
+              "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "pipex"
+        },
+		{
+            "name": "pipex_bonus",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/pipex_bonus",
+            "stopAtEntry": false,
+            "args": [
+                "infile", "sleep 3", "ls -l", "wc -l", "outfile"
+            ],
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "pipex_bonus"
+        }
+    ],
+    "version": "2.0.0"
+}

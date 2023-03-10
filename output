@@ -1,0 +1,22 @@
+total 320
+-rw-rw-r--@  1 mroy  2022_quebec   2762 Mar  9 11:10 Makefile
+drwxrwxr-x@  7 mroy  2022_quebec    238 Mar  9 11:10 assets
+drwxrwxr-x@  4 mroy  2022_quebec    136 Mar  9 11:10 bin
+-rw-rw-r--@  1 mroy  2022_quebec    152 Mar  9 11:10 gen_lst_names.sh
+-rw-rw-r--@  1 mroy  2022_quebec   3825 Mar  9 11:10 gen_lst_names.txt
+-rw-rw-r--@  1 mroy  2022_quebec   3565 Mar  9 11:10 gen_lst_names.txt.bak
+drwxrwxr-x@  5 mroy  2022_quebec    170 Mar  9 11:10 include
+-rw-rw-r--@  1 mroy  2022_quebec      0 Mar 10 14:10 infile
+-rwxr-xr-x   1 mroy  2022_quebec      6 Mar 10 15:02 input1
+drwxrwxr-x@ 18 mroy  2022_quebec    612 Mar 10 16:59 libft
+drwxr-xr-x   3 mroy  2022_quebec    102 Mar 10 16:34 obj
+drwxr-xr-x   4 mroy  2022_quebec    136 Mar 10 16:02 obj_bonus
+drwxr-xr-x   9 mroy  2022_quebec    306 Mar 10 16:59 obj_common
+-rwxr-xr-x@  1 mroy  2022_quebec      0 Mar 10 15:16 outfile
+-rw-rw-r--@  1 mroy  2022_quebec      0 Mar 10 17:02 output
+drwxrwxr-x@ 98 mroy  2022_quebec   3332 Mar  9 11:10 outs
+-rwxr-xr-x   1 mroy  2022_quebec  57688 Mar 10 16:59 pipex
+drwxr-xr-x   3 mroy  2022_quebec    102 Mar 10 13:53 pipex.dSYM
+-rwxr-xr-x   1 mroy  2022_quebec  75432 Mar 10 16:59 pipex_bonus
+-rw-rw-r--@  1 mroy  2022_quebec     37 Mar  9 11:10 sample
+drwxrwxr-x@  5 mroy  2022_quebec    170 Mar 10 13:52 src

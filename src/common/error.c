@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:03:11 by math              #+#    #+#             */
-/*   Updated: 2023/03/09 10:54:16 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/10 13:34:14 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	write_error(int32_t stderror, bool with_lf)
 	}
 }
 
-void	error_exit(const char *msg, int32_t stderror, bool show_error_msg)
+void	error_exit(const char *msg, int32_t stderror, bool show_error_msg,
+		int32_t exit_code)
 {
 	t_proc	*proc;
 
@@ -53,5 +54,5 @@ void	error_exit(const char *msg, int32_t stderror, bool show_error_msg)
 		write_msg(msg, stderror, true);
 	if (show_error_msg)
 		write_error(stderror, true);
-	exit(EXIT_FAILURE);
+	exit(exit_code);
 }

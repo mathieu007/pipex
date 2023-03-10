@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/09 10:53:48 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/10 14:19:13 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,20 @@ char	**parse_paths(char **envp)
 
 int32_t	open_files(t_proc *proc)
 {
-	int32_t	f_in;
-	int32_t	f_out;
-
 	proc->here_doc = false;
-	f_out = open(proc->f_out_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (f_out == -1)
+	proc->f_out = open(proc->f_out_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (proc->f_out == -1)
+	{
+		proc->f_out = 1;
 		write_error(2, true);
-	f_in = open(proc->f_in_name, O_RDONLY, 0777);
-	if (f_in == -1)
-		write_error(2, true);
-	dup2(f_in, STDIN_FILENO);
-	return (f_out);
+	}
+	proc->f_in = open(proc->f_in_name, O_RDONLY, 0777);
+	if (proc->f_in == -1)
+	{
+		proc->f_in = 0;
+		write_error(2, false);
+		write_msg(proc->f_in_name, 2, true);
+	}
+	dup2(proc->f_in, STDIN_FILENO);
+	return (proc->f_out);
 }

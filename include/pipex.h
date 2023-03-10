@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:21:35 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/09 10:52:27 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/10 13:18:52 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef struct s_proc
 int32_t		open_files(t_proc *proc);
 void		unlink_fifo(char *f_name);
 void		usage(void);
-void		error_exit(const char *msg, int32_t stderror, bool show_error_msg);
+void		error_exit(const char *msg, int32_t stderror, bool show_error_msg,
+				int32_t exit_code);
 void		execute(t_proc *proc, int32_t i);
 void		child_process(t_proc *proc, int32_t cmd_i);
 char		**parse_paths(char **envp);
