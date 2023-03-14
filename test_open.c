@@ -1,4 +1,5 @@
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,6 +8,5 @@
 
 int	main(void)
 {
-	int32_t fd = open("./input1", O_RDONLY | O_CREAT | O_RDWR);
-	printf("fd:%i", fd);
+	printf("fd:%lu", sizeof(bool));
 }
