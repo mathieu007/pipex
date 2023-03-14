@@ -1,23 +1,22 @@
-
 {
-	"env": {
-    	"myDefaultIncludePath": ["${workspaceFolder}", "${workspaceFolder}/include"],
-    	"myCompilerPath":  "/usr/bin/gcc"
-  	},
     "configurations": [
-        {
-            "name": "Linux",			
+               {
+            "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/src/**",
-				"${workspaceFolder}/include/",
-				"${workspaceFolder}/libft/include/",
-				"${workspaceFolder}/libft/**"
+                "${workspaceFolder}/include/",
+                "${workspaceFolder}/src/pipex/",
+                "${workspaceFolder}/src/common/",
+				"${workspaceFolder}/libft/include",
+                "${workspaceFolder}/libft/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
             "cStandard": "c99",
-            "cppStandard": "gnu++98",
-            "intelliSenseMode": "linux-gcc-x64"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64"
         }
     ],
     "version": 4

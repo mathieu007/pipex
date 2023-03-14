@@ -37,8 +37,9 @@ SRC_COMMONS :=	src/common/data.c	\
 				src/common/free.c	\
 				src/common/process.c	\
 				src/common/utils.c	\
-				src/common/parser.c	\
-				src/common/parser2.c	\
+				src/common/cmd_parse.c	\
+				src/common/cmd_parse2.c	\
+				src/common/fork.c	\
 
 BONUS_SRC   :=	src/bonus/get_next_line_temp.c	\
 				src/bonus/pipex_bonus.c	\

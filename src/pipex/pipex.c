@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/13 20:52:52 by math             ###   ########.fr       */
+/*   Updated: 2023/03/14 16:33:44 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 {
 	t_proc	*proc;
 
-	if (argc < 5)
+	if (argc != 5)
 		usage();
-	proc = init_data(argc, argv, envp);
+	proc = init_data(argc, argv, envp);	
 	open_files(proc);
 	pipe_childs(proc);
 	exec_childs(proc);

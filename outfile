@@ -1,1 +1,36 @@
-
+total 496
+-rw-r--r--   1 mroy  2022_quebec   2793 Mar 14 13:45 Makefile
+-rwxr-xr-x   1 mroy  2022_quebec  49472 Mar 14 16:05 a.out
+drwxr-xr-x   7 mroy  2022_quebec    238 Mar 14 07:56 assets2
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 07:56 default
+-rw-r--r--   1 mroy  2022_quebec    152 Mar 14 07:56 gen_lst_names.sh
+-rw-r--r--   1 mroy  2022_quebec   3825 Mar 14 07:56 gen_lst_names.txt
+-rw-r--r--   1 mroy  2022_quebec   3565 Mar 14 07:56 gen_lst_names.txt.bak
+drwxr-xr-x   5 mroy  2022_quebec    170 Mar 14 07:56 include
+-rw-r--r--   1 mroy  2022_quebec      0 Mar 14 07:56 infile
+-rwxr-xr-x   1 mroy  2022_quebec    241 Mar 14 07:56 infile2
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 07:56 infile222
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 07:56 infile23
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 17:00 input
+-rwxr-xr-x   1 mroy  2022_quebec     10 Mar 14 15:10 input1
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 16:22 input3333
+drwxr-xr-x  18 mroy  2022_quebec    612 Mar 14 17:22 libft
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 15:06 not-existing
+drwxr-xr-x   3 mroy  2022_quebec    102 Mar 14 16:34 obj
+drwxr-xr-x   4 mroy  2022_quebec    136 Mar 14 12:37 obj_bonus
+drwxr-xr-x  12 mroy  2022_quebec    408 Mar 14 17:22 obj_common
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 17:22 outfile
+-rw-r--r--   1 mroy  2022_quebec      0 Mar 14 17:21 output
+-rw-r--r--   1 mroy  2022_quebec      9 Mar 14 16:29 outputcd
+drwxr-xr-x   6 mroy  2022_quebec    204 Mar 14 07:56 outs2
+-rwxr-xr-x   1 mroy  2022_quebec  75832 Mar 14 17:22 pipex
+drwxr-xr-x  16 mroy  2022_quebec    544 Mar 14 16:52 pipex-tester
+drwxr-xr-x   3 mroy  2022_quebec    102 Mar 14 15:16 pipex.dSYM
+drwxr-xr-x   9 mroy  2022_quebec    306 Mar 14 16:58 pipexMedic
+-rwxr-xr-x   1 mroy  2022_quebec  77104 Mar 14 17:22 pipex_bonus
+-rw-r--r--   1 mroy  2022_quebec     37 Mar 14 07:56 sample
+drwxr-xr-x   5 mroy  2022_quebec    170 Mar 14 07:56 src
+-rwxr-xr-x   1 mroy  2022_quebec      0 Mar 14 07:56 temp_file
+-rw-r--r--   1 mroy  2022_quebec   3305 Mar 14 07:56 test.c
+-rw-r--r--   1 mroy  2022_quebec   3379 Mar 14 07:56 test2.c
+-rw-r--r--   1 mroy  2022_quebec    222 Mar 14 16:05 test_open.c
