@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/09 09:09:04 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/13 21:09:03 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static char	**get_args(char *str, char *cmd)
 		count = count_arg_char(str);
 		dest = malloc(count + 1);
 		if (dest == NULL)
-			return (lst_free(lst), free_all(), NULL);
+			return (lst_free(lst), free_err_exit(STDERR_FILENO));
 		dest[count] = '\0';
-		if (count >= 2 && str[0] == '\"' && str[count - 1] == '\"')
+		if (count >= 2 && str[0] == '"' && str[count - 1] == '"')
 			lst_add(lst, ft_strncpy(dest, &str[1], count - 2));
 		else if (count >= 2 && str[0] == '\'' && str[count - 1] == '\'')
 			lst_add(lst, ft_strncpy(dest, &str[1], count - 2));
@@ -79,16 +79,28 @@ t_cmd	**parse_cmds(t_proc *proc, char **argv, int32_t count)
 	i = 0;
 	cmds = malloc(sizeof(t_cmd *) * (count + 1));
 	if (cmds == NULL)
-		return (free_all(), NULL);
+		return (free_err_exit(STDERR_FILENO));
 	proc->cmds = cmds;
-	while (i < count)
+	proc->error = false;
+	while (i < proc->cmds_count)
 	{
 		cmds[i] = malloc(sizeof(t_cmd));
 		if (cmds[i] == NULL)
-			return (free_all(), NULL);
+			return (free_err_exit(STDERR_FILENO));
 		cmd = get_cmd_start(argv[i]);
 		cmds[i]->cmd = get_cmd(cmd);
 		cmds[i]->args = get_args(cmd, cmds[i]->cmd);
+		cmds[i]->full_path_cmd = get_full_path_cmd(proc, cmds[i]);
+		cmds[i]->error = false;
+		proc->error = false;
+		if (!cmds[i]->full_path_cmd)
+		{
+			write_msg(STDERR_FILENO, "Command not found: ");
+			write_msg(STDERR_FILENO, proc->cmds[i]->cmd);
+			write_msg(STDERR_FILENO, "\n");
+			cmds[i]->error = true;
+			proc->error = true;
+		}
 		i++;
 	}
 	cmds[i] = NULL;

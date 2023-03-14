@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/10 14:11:30 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/13 14:54:38 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,31 @@ t_proc	*init_fds(int32_t *fds, int32_t i)
 	return (&proc[0]);
 }
 
+char	*get_file_name(char *f_name, t_proc	*proc)
+{
+	char	*full_path;
+
+	if (ft_strstartwith(f_name, "../") || ft_strstartwith(f_name, "./")
+		|| ft_strstartwith(f_name, "/"))
+		return (strdup(f_name));
+	full_path = ft_strjoin(proc->pwd, f_name);
+	if (full_path == NULL)
+		return (free_err_exit(EXIT_FAILURE));
+	return (full_path);
+	return (ft_strjoin("./", f_name));
+}
+
 t_proc	*init_data(int32_t argc, char **argv, char **envp)
 {
 	t_proc	*proc;
 
 	proc = get_proc();
 	proc->here_doc = false;
-	if (ft_strncmp(argv[1], "./", 2) != 0)
-		proc->f_in_name = ft_strjoin("./", argv[1]);
-	if (ft_strncmp(argv[1], "./", 2) != 0)
-		proc->f_out_name = ft_strjoin("./", argv[argc - 1]);
+	proc->pwd = parse_pwd(envp);
 	proc->paths = parse_paths(envp);
+	proc->envp = envp;
+	proc->f_in_name = get_file_name(argv[1], proc);
+	proc->f_out_name = get_file_name(argv[argc - 1], proc);
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		proc->here_doc = true;
@@ -51,9 +65,8 @@ t_proc	*init_data(int32_t argc, char **argv, char **envp)
 		proc->here_doc = false;
 		proc->cmds_count = argc - 3;
 		proc->cmds = parse_cmds(proc, &argv[2], proc->cmds_count);
-	}
-	if (proc->cmds == NULL)
-		return (free_all(), NULL);
-	proc->envp = envp;
+	}	
+	if (!proc->cmds || !proc->f_out_name || !proc->f_in_name)
+		return (free_err_exit(STDERR_FILENO));
 	return (&proc[0]);
 }

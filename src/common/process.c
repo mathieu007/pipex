@@ -3,53 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:57:14 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/10 17:01:42 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/13 22:08:39 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/// @brief Very important use WNOHANG: no hang in wait
-/// @param proc
-/// @param i
-void	child_process(t_proc *proc, int32_t i)
+int32_t count_valid_cmd(t_proc *proc)
 {
-	pid_t	pid;
-	int32_t	status;
+	int32_t	i;
+	int32_t	count;
 
-	pid = fork();
-	if (pid == -1)
-		error_exit(NULL, 2, true, 1);
-	if (pid == 0)
+	i = 0;
+	count = 0;
+	while (i < proc->cmds_count)
 	{
-		if (i - 1 != -1)
-		{
-			dup2(proc->cmds[i - 1]->file_in, STDIN_FILENO);
-			close(proc->cmds[i - 1]->file_in);
-			close(proc->cmds[i - 1]->file_out);
-		}
-		if (i + 1 < proc->cmds_count)
-		{
-			close(proc->cmds[i]->file_in);
-			dup2(proc->cmds[i]->file_out, STDOUT_FILENO);
-			close(proc->cmds[i]->file_out);
-		}
-		execute(proc, i);
+		if (!proc->cmds[i]->error)
+			count++;
+		i++;
 	}
-	else
-	{
-		if (i - 1 != -1)
-		{
-			close(proc->cmds[i - 1]->file_in);
-			close(proc->cmds[i - 1]->file_out);
-		}
-		close(proc->cmds[i]->file_out);
-		dup2(proc->cmds[i]->file_in, STDIN_FILENO);
-		waitpid(pid, &status, WNOHANG);
-	}
+	return (count);
 }
 
 void	pipe_childs(t_proc *proc)
@@ -58,11 +34,129 @@ void	pipe_childs(t_proc *proc)
 	int32_t	fds[2];
 
 	i = 0;
-	while (i < proc->cmds_count - 1)
+	while (i < proc->cmds_count)
 	{
-		if (pipe(fds) == -1)
-			error_exit(NULL, 2, true, 1);
-		proc = init_fds(fds, i);
+		if (!proc->cmds[i]->error)
+		{
+			if (pipe(fds) == -1)
+			{
+				write_msg(STDERR_FILENO, strerror(errno));
+				free_exit(EXIT_FAILURE);
+			}
+			init_fds(fds, i);
+		}
+		i++;
+	}
+}
+
+static void	fork_first_child(t_proc *proc)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{	
+		write_msg(STDERR_FILENO, strerror(errno));
+		free_exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		dup2(proc->cmds[0]->file_out, STDOUT_FILENO);
+		close(proc->cmds[0]->file_out);
+		close(proc->cmds[0]->file_in);
+		close(proc->cmds[1]->file_out);
+		close(proc->cmds[1]->file_in);
+		execute(proc, 0);
+	}
+	proc->cmds[0]->pid = pid;
+}
+
+static void	fork_single_child(t_proc *proc, int32_t i)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{	
+		write_msg(STDERR_FILENO, strerror(errno));
+		free_exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		dup2(proc->cmds[i]->file_in, STDIN_FILENO);
+		close(proc->cmds[i]->file_out);
+		close(proc->cmds[i]->file_in);
+		close(proc->f_in);
+		close(proc->f_out);
+		execute(proc, i);
+	}
+	proc->cmds[i]->pid = pid;
+}
+
+static void	fork_last_child(t_proc *proc, int32_t i)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		write_msg(STDERR_FILENO, strerror(errno));
+		free_exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		dup2(proc->cmds[i - 1]->file_in, STDIN_FILENO);
+		close(proc->cmds[i - 1]->file_in);
+		close(proc->cmds[i - 1]->file_out);
+		close(proc->cmds[i]->file_in);
+		close(proc->cmds[i]->file_out);
+		close(proc->f_in);
+		close(proc->f_out);
+		execute(proc, i);
+	}
+	proc->cmds[i]->pid = pid;
+}
+
+static void	fork_middle_child(t_proc *proc, int32_t i)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		write_msg(STDERR_FILENO, strerror(errno));
+		free_exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{	
+		dup2(proc->cmds[i - 1]->file_in, STDIN_FILENO);
+		dup2(proc->cmds[i]->file_out, STDOUT_FILENO);
+		close(proc->cmds[i - 1]->file_in);
+		close(proc->cmds[i - 1]->file_out);
+		close(proc->cmds[i]->file_in);
+		close(proc->cmds[i]->file_out);
+		execute(proc, i);
+	}
+	proc->cmds[i]->pid = pid;
+}
+
+static void	wait_childs(t_proc *proc)
+{
+	int32_t	i;
+	pid_t	child;
+	int32_t	status;
+
+	i = 0;
+	while (i < proc->cmds_count)
+	{
+		if (!proc->cmds[i]->error)
+		{
+			child = proc->cmds[i]->pid;
+			if (ft_strncmp(proc->cmds[i]->cmd, "sleep", 5) == 0)
+				waitpid(child, &status, 0);
+			else
+				waitpid(child, &status, WNOHANG);
+		}
 		i++;
 	}
 }
@@ -70,34 +164,43 @@ void	pipe_childs(t_proc *proc)
 void	exec_childs(t_proc *proc)
 {
 	int32_t	i;
+	int32_t	count;
 
 	i = 0;
-	while (i < proc->cmds_count - 1)
+	count = count_valid_cmd(proc);
+	while (i < proc->cmds_count)
 	{
-		child_process(proc, i);
+		if (!proc->cmds[i]->error)
+		{
+			if (count == 1)
+				fork_single_child(proc, i);
+			else if (i == 0)
+				fork_first_child(proc);
+			else if (i == proc->cmds_count - 1)
+				fork_last_child(proc, i);
+			else
+				fork_middle_child(proc, i);
+		}
 		i++;
 	}
+	wait_childs(proc);
 }
 
 void	execute(t_proc *proc, int32_t i)
 {
-	char	*fp_cmd;
-
 	if (!proc->paths)
 	{
-		write_msg("Command not found:", 2, false);
-		write_msg(proc->cmds[i]->cmd, 2, true);
-		error_exit(NULL, 2, false, 1);
+		write_msg(STDERR_FILENO, "Environement path error.\n");
+		write_msg(STDERR_FILENO, "Command not found: ");
+		write_msg(STDERR_FILENO, proc->cmds[i]->cmd);
+		write_msg(STDERR_FILENO, "\n");
+		free_exit(EXIT_FAILURE);
 	}
-	fp_cmd = get_full_path_cmd(proc, proc->cmds[i]->cmd);
-	if (!fp_cmd)
+	if (execve(proc->cmds[i]->full_path_cmd, proc->cmds[i]->args, proc->envp) == -1)
 	{
-		write_msg("Command not found:", 2, false);
-		write_msg(proc->cmds[i]->cmd, 2, true);
-		error_exit(NULL, 2, false, 1);
+		write_msg(STDERR_FILENO, "Could not execve command: ");
+		write_msg(STDERR_FILENO, proc->cmds[i]->cmd);
+		write_msg(STDERR_FILENO, "\n");
+		free_exit(EXIT_FAILURE);
 	}
-	if (execve(fp_cmd, proc->cmds[i]->args, proc->envp) == -1)
-		error_exit("Could not execve.", 2, true, 1);
-	free(fp_cmd);
-	error_exit("Could not execve.", 2, true, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 07:26:48 by math              #+#    #+#             */
-/*   Updated: 2023/03/08 18:26:45 by math             ###   ########.fr       */
+/*   Updated: 2023/03/12 17:21:11 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,6 @@ char				*ft_replace_char_temp(char *str, char to_replace,
 						char *replace_by);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strncpy(char *dest, const char *src, int32_t len);
+bool				ft_strstartwith(const char *s1, const char *start_with);
 
 #endif

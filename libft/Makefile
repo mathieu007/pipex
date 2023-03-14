@@ -9,6 +9,7 @@ SRC	=	src/alloc_pool/data_pool.c	\
 		src/ft_fclose.c	\
 		src/ft_fgetc.c	\
 		src/ft_fopen.c	\
+		src/ft_strchrlast.c	\
 		src/ft_isalnum.c	\
 		src/ft_isalpha.c	\
 		src/ft_isascii.c	\
@@ -39,6 +40,7 @@ SRC	=	src/alloc_pool/data_pool.c	\
 		src/ft_striteri.c	\
 		src/ft_strjoin.c	\
 		src/ft_strjoin_temp.c	\
+		src/ft_strstarwith.c	\
 		src/ft_strlcat.c	\
 		src/ft_strlcpy.c	\
 		src/ft_strncpy.c	\

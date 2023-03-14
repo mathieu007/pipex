@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/10 13:18:36 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/12 15:05:12 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	usage_bonus(void)
 	printf("Example: ./pipex <file_in> <cmd1> <cmd2> <...> <file_out>\n");
 	printf("Example: ./pipex \"here_doc\" <LIMITER> <cmd>"
 		"<cmd1> <...> <file_out>\n");
-	error_exit(NULL, 1, false, 1);
+	free_exit(EXIT_FAILURE);
 }
 
 void	write_line(char *sep, int32_t fd_in, int32_t fd_out)
@@ -46,11 +46,11 @@ void	here_doc(char *sep, int argc)
 	if (argc < 6)
 		usage_bonus();
 	if (pipe(fds) == -1)
-		error_exit(NULL, 2, true, 1);
+		free_err_exit(EXIT_FAILURE);
 	init_fds(fds, 0);
 	pid = fork();
 	if (pid == -1)
-		error_exit(NULL, 2, true, 1);
+		free_err_exit(EXIT_FAILURE);
 	if (pid == 0)
 		write_line(sep, fds[0], fds[1]);
 	else

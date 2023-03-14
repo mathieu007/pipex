@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                   :+:      :+:    :+:   */
+/*   ft_strchrlast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 20:16:34 by mathieu           #+#    #+#             */
-/*   Updated: 2022/10/19 08:29:43 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/13 12:08:43 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strchrlast(const char *s, char c)
 {
-	unsigned int	i;
+	int	i;
 
-	i = 0;
-	while (i < n && s1[i] && s2[i])
+	i = ft_strlen(s) - 1;
+	if (i < 0)
+		return (NULL);
+	while (i >= 0)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		if (s[i] == c)
+			return ((char *)&s[i]);
+		i--;
 	}
-	if (i != n)
-		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-	return (0);
+	if (c == 0)
+		return ((char *)s);
+	return (NULL);
 }
