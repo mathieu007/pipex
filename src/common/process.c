@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:57:14 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/14 17:26:18 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/15 07:23:26 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,43 @@ static void	wait_childs(t_proc *proc)
 		i++;
 	}
 }
+
+// void	wait_process()
+// {
+//     while (1) {
+//         int num_children_exited = 0;
+
+//         // Check status of each child process
+//         for (i = 0; i < NUM_CHILDREN; i++) {
+//             if (pid[i] != 0) {
+//                 pid_t result = waitpid(pid[i], &status, WNOHANG);
+//                 if (result == -1) {
+//                     perror("waitpid");
+//                     exit(EXIT_FAILURE);
+//                 }
+//                 else if (result == pid[i]) {
+//                     // Child process has exited
+//                     if (WIFEXITED(status)) {
+//                         printf("Child process %d exited with status %d\n", pid[i], WEXITSTATUS(status));
+//                     }
+//                     pid[i] = 0;
+//                     num_children_exited++;
+//                 }
+//             }
+//             else {
+//                 num_children_exited++;
+//             }
+//         }
+
+//         if (num_children_exited == NUM_CHILDREN) {
+//             // All child processes have exited
+//             break;
+//         }
+
+//         // Sleep for 1 second before checking again
+//         sleep(1);
+//     }
+// }
 
 void	exec_childs(t_proc *proc)
 {

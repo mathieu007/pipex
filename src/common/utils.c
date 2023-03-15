@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/14 16:47:37 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/15 06:50:12 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,12 @@ char	*get_full_path_cmd(t_proc *proc, t_cmd *command)
 char	*parse_pwd(char **envp)
 {
 	int32_t	i;
-	char	*env;
 
 	if (!envp || !*envp)
 		return (NULL);
 	i = 0;
 	while (envp[i])
 	{
-		env = envp[i];
 		if (ft_strnstr(envp[i], "PWD=", 4) != 0)
 		{
 			if (*(envp[i] + 4) == '/' && *(envp[i] + 5) == '\0')
@@ -105,13 +103,13 @@ static void	open_temp_file(t_proc *proc)
 	write_msg(2, ": ");
 	write_msg(2, proc->f_in_name);
 	temp = proc->f_in_name;
-	name = ft_strchrlast(proc->f_in_name, '/') + 1;
+	name = ft_strchrlast(proc->f_in_name, '/');
 	if (!name)
 	{
 		free(name);
 		free_err_exit(EXIT_FAILURE);
 	}
-	proc->f_in_name = ft_strjoin(proc->pwd, name);
+	proc->f_in_name = ft_strjoin(proc->pwd, name + 1);
 	if (!proc->f_in_name)
 		free_err_exit(EXIT_FAILURE);
 	free(temp);
