@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 07:26:48 by math              #+#    #+#             */
-/*   Updated: 2023/03/12 17:21:11 by math             ###   ########.fr       */
+/*   Updated: 2023/03/15 17:19:51 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define LARGE_POOL_SIZE 134215680
 # define TEMP_BUFFER 1000000
 
-# define BUFFER_SIZE 4096
 # include "lst.h"
 # include <fcntl.h>
 # include <limits.h>
@@ -50,13 +49,6 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
-
-typedef struct s_file
-{
-	int				fd;
-	char			buf[BUFFER_SIZE + 1];
-	int				i;
-}					t_file;
 
 int32_t				ft_min(int32_t nbr, int32_t nbr2);
 int32_t				ft_max(int32_t nbr, int32_t nbr2);
@@ -111,9 +103,9 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				ft_print_bits(size_t const size, void const *const ptr);
 void				ft_putstr(char *c);
-t_file				*ft_fopen(const char *path);
-int					ft_fgetc(t_file *stream);
-int					ft_fclose(t_file **stream);
+// t_file				*ft_fopen(const char *path);
+// int					ft_fgetc(t_file *stream);
+// int					ft_fclose(t_file **stream);
 uint8_t				*mem_pool(int32_t size_in_bytes);
 uint8_t				*temp_pool(int32_t size_in_bytes);
 char				**ft_split_many_temp(char *s, char *separators);

@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/14 16:33:44 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/15 14:44:20 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 
 	if (argc != 5)
 		usage();
-	proc = init_data(argc, argv, envp);	
+	proc = init_data(argc, argv, envp);
 	open_files(proc);
 	pipe_childs(proc);
 	exec_childs(proc);
-	if (proc->error)
+	if (!proc->command_found)
 		free_exit(EXIT_FAILURE);
 	else
 		free_all();

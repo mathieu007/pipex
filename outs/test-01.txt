@@ -1,0 +1,26 @@
+# mkdir -p 
+mkdir -p obj
+mkdir -p obj_bonus
+mkdir -p obj_common
+mkdir -p obj_common/
+gcc -Wall -Wextra -Werror -g -Ilibft/include -Iinclude -c -o obj_common/free.o src/common/free.c
+mkdir -p obj_common/
+gcc -Wall -Wextra -Werror -g -Ilibft/include -Iinclude -c -o obj_common/process.o src/common/process.c
+mkdir -p obj_common/
+gcc -Wall -Wextra -Werror -g -Ilibft/include -Iinclude -c -o obj_common/utils.o src/common/utils.c
+/Library/Developer/CommandLineTools/usr/bin/make -C libft
+mkdir -p bin
+mkdir -p obj
+mkdir -p obj_lst
+mkdir -p obj_bonus
+ar crs libft.a obj_bonus/ft_lstadd_back.o obj_bonus/ft_lstadd_front.o obj_bonus/ft_lstclear.o obj_bonus/ft_lstdelone.o obj_bonus/ft_lstiter.o obj_bonus/ft_lstlast.o obj_bonus/ft_lstmap.o obj_bonus/ft_lstnew.o obj_bonus/ft_lstsize.o
+ar crs libft.a obj_lst/_lst_group_by_add.o obj_lst/_lst_group_by_internal.o obj_lst/_lst_group_by_new.o obj_lst/func/inc_ptr.o obj_lst/func/params1.o obj_lst/func/params2.o obj_lst/func/to_char.o obj_lst/func/to_int.o obj_lst/func/to_long.o obj_lst/func/to_short.o obj_lst/func/to_str.o obj_lst/internal/lst_free_data_internal.o obj_lst/internal/lst_free_internal.o obj_lst/internal/lst_new_internal.o obj_lst/lst_add.o obj_lst/lst_copy.o obj_lst/lst_filter.o obj_lst/lst_filter_avg.o obj_lst/lst_filter_count.o obj_lst/lst_filter_exclude.o obj_lst/lst_filter_first.o obj_lst/lst_filter_get_next.o obj_lst/lst_filter_get_nth.o obj_lst/lst_filter_include.o obj_lst/lst_filter_index_of.o obj_lst/lst_filter_indices.o obj_lst/lst_filter_last.o obj_lst/lst_filter_max.o obj_lst/lst_filter_min.o obj_lst/lst_filter_range.o obj_lst/lst_filter_sum.o obj_lst/lst_firts.o obj_lst/lst_free.o obj_lst/lst_get.o obj_lst/lst_get2.o obj_lst/lst_get_alloc_size.o obj_lst/lst_group_by.o obj_lst/lst_group_by_get.o obj_lst/lst_insert.o obj_lst/lst_int_to_bool_array.o obj_lst/lst_last.o obj_lst/lst_new.o obj_lst/lst_new_item.o obj_lst/lst_order_by.o obj_lst/lst_remove.o obj_lst/lst_replace.o obj_lst/lst_reset.o obj_lst/lst_reverse.o obj_lst/lst_reverse_select.o obj_lst/lst_rotate.o obj_lst/lst_select.o obj_lst/lst_sequence_equal.o obj_lst/lst_swap.o obj_lst/lst_to_array.o obj_lst/lst_to_array2.o obj_lst/lst_utils_internal.o obj_lst/lst_utils_internal2.o obj_lst/utils.o
+gcc -Wall -Wextra -Werror -g -Ilibft/include -Iinclude -o pipex obj/pipex.o obj_common/data.o obj_common/error.o obj_common/free.o obj_common/process.o obj_common/utils.o obj_common/cmd_parse.o obj_common/cmd_parse2.o obj_common/fork.o libft/libft.a
+/Library/Developer/CommandLineTools/usr/bin/make -C libft
+mkdir -p bin
+mkdir -p obj
+mkdir -p obj_lst
+mkdir -p obj_bonus
+ar crs libft.a obj_bonus/ft_lstadd_back.o obj_bonus/ft_lstadd_front.o obj_bonus/ft_lstclear.o obj_bonus/ft_lstdelone.o obj_bonus/ft_lstiter.o obj_bonus/ft_lstlast.o obj_bonus/ft_lstmap.o obj_bonus/ft_lstnew.o obj_bonus/ft_lstsize.o
+ar crs libft.a obj_lst/_lst_group_by_add.o obj_lst/_lst_group_by_internal.o obj_lst/_lst_group_by_new.o obj_lst/func/inc_ptr.o obj_lst/func/params1.o obj_lst/func/params2.o obj_lst/func/to_char.o obj_lst/func/to_int.o obj_lst/func/to_long.o obj_lst/func/to_short.o obj_lst/func/to_str.o obj_lst/internal/lst_free_data_internal.o obj_lst/internal/lst_free_internal.o obj_lst/internal/lst_new_internal.o obj_lst/lst_add.o obj_lst/lst_copy.o obj_lst/lst_filter.o obj_lst/lst_filter_avg.o obj_lst/lst_filter_count.o obj_lst/lst_filter_exclude.o obj_lst/lst_filter_first.o obj_lst/lst_filter_get_next.o obj_lst/lst_filter_get_nth.o obj_lst/lst_filter_include.o obj_lst/lst_filter_index_of.o obj_lst/lst_filter_indices.o obj_lst/lst_filter_last.o obj_lst/lst_filter_max.o obj_lst/lst_filter_min.o obj_lst/lst_filter_range.o obj_lst/lst_filter_sum.o obj_lst/lst_firts.o obj_lst/lst_free.o obj_lst/lst_get.o obj_lst/lst_get2.o obj_lst/lst_get_alloc_size.o obj_lst/lst_group_by.o obj_lst/lst_group_by_get.o obj_lst/lst_insert.o obj_lst/lst_int_to_bool_array.o obj_lst/lst_last.o obj_lst/lst_new.o obj_lst/lst_new_item.o obj_lst/lst_order_by.o obj_lst/lst_remove.o obj_lst/lst_replace.o obj_lst/lst_reset.o obj_lst/lst_reverse.o obj_lst/lst_reverse_select.o obj_lst/lst_rotate.o obj_lst/lst_select.o obj_lst/lst_sequence_equal.o obj_lst/lst_swap.o obj_lst/lst_to_array.o obj_lst/lst_to_array2.o obj_lst/lst_utils_internal.o obj_lst/lst_utils_internal2.o obj_lst/utils.o
+gcc -Wall -Wextra -Werror -g -Ilibft/include -Iinclude -o pipex_bonus obj_bonus/get_next_line_temp.o obj_bonus/pipex_bonus.o obj_common/data.o obj_common/error.o obj_common/free.o obj_common/process.o obj_common/utils.o obj_common/cmd_parse.o obj_common/cmd_parse2.o obj_common/fork.o libft/libft.a

@@ -41,7 +41,8 @@ SRC_COMMONS :=	src/common/data.c	\
 				src/common/cmd_parse2.c	\
 				src/common/fork.c	\
 
-BONUS_SRC   :=	src/bonus/get_next_line_temp.c	\
+BONUS_SRC   :=	src/bonus/get_next_line.c	\
+				src/bonus/get_next_line_utils.c	\
 				src/bonus/pipex_bonus.c	\
 
 OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT))) $(patsubst $(COMMONSDIR)/%,$(BUILDDIR_COMMONS)/%,$(SRC_COMMONS:.$(SRCEXT)=.$(OBJEXT)))

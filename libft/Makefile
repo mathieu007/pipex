@@ -6,9 +6,6 @@ SRC	=	src/alloc_pool/data_pool.c	\
 		src/ft_bzero.c	\
 		src/ft_calloc.c	\
 		src/ft_exponent.c	\
-		src/ft_fclose.c	\
-		src/ft_fgetc.c	\
-		src/ft_fopen.c	\
 		src/ft_strchrlast.c	\
 		src/ft_isalnum.c	\
 		src/ft_isalpha.c	\

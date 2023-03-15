@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/15 06:50:12 by math             ###   ########.fr       */
+/*   Updated: 2023/03/15 12:46:22 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static void	open_temp_file(t_proc *proc)
 	write_msg(2, strerror(errno));
 	write_msg(2, ": ");
 	write_msg(2, proc->f_in_name);
+	write_msg(2, "\n");
 	temp = proc->f_in_name;
 	name = ft_strchrlast(proc->f_in_name, '/');
 	if (!name)
@@ -118,7 +119,7 @@ static void	open_temp_file(t_proc *proc)
 		free_exit(EXIT_FAILURE);
 	proc->waitpid = WNOHANG;
 	proc->f_in_not_exist = true;
-	write_msg(2, "\n");
+	
 }
 
 int32_t	open_files(t_proc *proc)
@@ -128,7 +129,6 @@ int32_t	open_files(t_proc *proc)
 	proc->f_out = open(proc->f_out_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (proc->f_out == -1)
 	{
-		proc->waitpid = WNOHANG;
 		write_msg(2, strerror(errno));
 		write_msg(2, proc->f_out_name);
 		write_msg(2, "\n");
@@ -138,9 +138,5 @@ int32_t	open_files(t_proc *proc)
 	proc->f_in_not_exist = false;
 	if (proc->f_in == -1)
 		open_temp_file(proc);
-	dup2(proc->f_out, STDOUT_FILENO);
-	dup2(proc->f_in, STDIN_FILENO);
-	close(proc->f_out);
-	close(proc->f_in);
 	return (proc->f_out);
 }

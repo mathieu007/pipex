@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/14 13:46:30 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/15 14:30:02 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,16 @@ static void	*parse_cmd(t_proc *proc, t_cmd **cmds, int32_t i, char *cmd)
 	cmds[i]->cmd = get_cmd(cmd);
 	cmds[i]->args = get_args(cmd, cmds[i]->cmd);
 	cmds[i]->full_path_cmd = get_full_path_cmd(proc, cmds[i]);
+	cmds[i]->args[0] = cmds[i]->full_path_cmd;
 	cmds[i]->error = false;
 	proc->error = false;
+	proc->command_found = true;
 	if (!cmds[i]->full_path_cmd)
 	{
 		write_msg(STDERR_FILENO, "Command not found: ");
 		write_msg(STDERR_FILENO, proc->cmds[i]->cmd);
 		write_msg(STDERR_FILENO, "\n");
-		cmds[i]->error = true;
-		proc->error = true;
+		proc->command_found = false;
 	}
 	return (NULL);
 }

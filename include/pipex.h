@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:21:35 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/14 12:33:30 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/15 14:28:23 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_cmd
 typedef struct s_proc
 {
 	bool	error;
+	bool	command_found;
 	bool	here_doc;
 	char	*pwd;
 	char	**paths;
@@ -76,7 +77,7 @@ bool		ft_strstartwith(const char *s1, const char *start_with);
 char		*ft_strchrlast(const char *s, char c);
 char		*parse_pwd(char **envp);
 void		free_cmd(t_proc *proc, int32_t i);
-void		fork_first_child(t_proc *proc);
+void		fork_first_child(t_proc *proc, int32_t i);
 void		fork_single_child(t_proc *proc, int32_t i);
 void		fork_last_child(t_proc *proc, int32_t i);
 void		fork_middle_child(t_proc *proc, int32_t i);

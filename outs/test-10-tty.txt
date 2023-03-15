@@ -1,0 +1,2 @@
+No such file or directory: /Users/mroy/42_quebec/cursus/pipex/pipex-tester/not-existing/deepthought.txt
+scripts/test_utils.sh: line 19: 38735 Terminated: 15          $MEMLEAKS "$@"

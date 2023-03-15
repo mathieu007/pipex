@@ -1,0 +1,2 @@
+Command not found: notexisting
+scripts/test_utils.sh: line 19: 38963 Terminated: 15          $MEMLEAKS "$@"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/13 19:19:54 by math             ###   ########.fr       */
+/*   Updated: 2023/03/15 11:40:13 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void	free_addr(char **addr)
 		*addr = NULL;
 	}
 }
-
-
 
 void	free_cmds(t_proc *proc)
 {
@@ -50,9 +48,9 @@ void	free_cmd(t_proc *proc, int32_t	i)
 			i2++;
 		}
 		free(proc->cmds[i]->args);
+		free(proc->cmds[i]->cmd);
 		proc->cmds[i]->args = NULL;
 	}
-	free_addr(&(proc->cmds[i]->full_path_cmd));
 	free(proc->cmds[i]);
 	proc->cmds[i] = NULL;
 }

@@ -5,23 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 07:52:27 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/02 13:57:19 by mroy             ###   ########.fr       */
+/*   Created: 2023/03/08 07:26:48 by math              #+#    #+#             */
+/*   Updated: 2023/03/15 15:46:08 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define TMP_BUFFER_SIZE 10000
-
-# include "libft.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+# include <fcntl.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-char	*get_next_line_temp(int fd);
-char	*read_buff(int32_t fd, char **cur_buff, char *save);
-char	*ret_buff(int32_t fd, char **cur_buff, char *save);
+void	ft_strcpy2(char *dst, const char *src);
+void	ft_strlcpy2(char *dst, const char *src, int32_t len);
+char	*get_next_line(int32_t fd);
 
 #endif

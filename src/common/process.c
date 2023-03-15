@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:57:14 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/15 07:23:26 by math             ###   ########.fr       */
+/*   Updated: 2023/03/15 14:41:49 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,56 +32,72 @@ static void	wait_childs(t_proc *proc)
 {
 	int32_t	i;
 	int32_t	status;
+	pid_t	pid;
 
 	i = 0;
 	while (i < proc->cmds_count)
 	{
-		if (!proc->cmds[i]->error)
+		if (!proc->cmds[i]->error && proc->command_found)
 		{
-			if (ft_strncmp(proc->cmds[i]->cmd, "sleep", 5) == 0)
-				waitpid(proc->cmds[i]->pid, &status, 0);
-			else
-				waitpid(proc->cmds[i]->pid, &status, WNOHANG);
+			pid = proc->cmds[i]->pid;
+			// if (ft_strncmp(proc->cmds[i]->cmd, "sleep", 5) == 0)
+			// 	waitpid(pid, &status, 0);
+			// else
+			waitpid(pid, &status, 0);
 		}
 		i++;
 	}
 }
 
-// void	wait_process()
+// static int32_t	child_has_exit(t_proc *proc, int32_t i)
 // {
-//     while (1) {
-//         int num_children_exited = 0;
+// 	int32_t	status;
+// 	pid_t	result;
 
-//         // Check status of each child process
-//         for (i = 0; i < NUM_CHILDREN; i++) {
-//             if (pid[i] != 0) {
-//                 pid_t result = waitpid(pid[i], &status, WNOHANG);
-//                 if (result == -1) {
-//                     perror("waitpid");
-//                     exit(EXIT_FAILURE);
-//                 }
-//                 else if (result == pid[i]) {
-//                     // Child process has exited
-//                     if (WIFEXITED(status)) {
-//                         printf("Child process %d exited with status %d\n", pid[i], WEXITSTATUS(status));
-//                     }
-//                     pid[i] = 0;
-//                     num_children_exited++;
-//                 }
-//             }
-//             else {
-//                 num_children_exited++;
-//             }
-//         }
+// 	if (proc->cmds[i]->pid != 0)
+// 	{
+// 		result = waitpid(proc->cmds[i]->pid, &status, WNOHANG);
+// 		if (result == -1)
+// 		{
+// 			perror("waitpid error.");
+// 			free_exit(EXIT_FAILURE);
+// 		}
+// 		else if (result == proc->cmds[i]->pid || status > 0)
+// 		{
+// 			// if (WIFSIGNALED(status) || WIFEXITED(status))
+// 			proc->cmds[i]->pid = 0;
+// 			return (1);
+// 		}
+// 		return (0);
+// 	}
+// 	return (1);
+// }
+// /// @brief should use a usleep, but not allowed
+// /// @param proc
+// static void	wait_child(t_proc *proc)
+// {
+// 	int32_t	i;
+// 	int32_t	count_valid_child;
+// 	int32_t	child_exit;
 
-//         if (num_children_exited == NUM_CHILDREN) {
-//             // All child processes have exited
-//             break;
-//         }
-
-//         // Sleep for 1 second before checking again
-//         sleep(1);
-//     }
+// 	count_valid_child = count_valid_cmd(proc);
+// 	child_exit = 0;
+// 	while (true)
+// 	{
+// 		i = 0;
+// 		while (i < proc->cmds_count)
+// 		{
+// 			if (proc->cmds[i]->error)
+// 			{
+// 				i++;
+// 				continue ;
+// 			}
+// 			child_exit += child_has_exit(proc, i);
+// 			i++;
+// 		}
+// 		if (child_exit == count_valid_child)
+// 			break ;
+// 	}
 // }
 
 void	exec_childs(t_proc *proc)
@@ -91,6 +107,10 @@ void	exec_childs(t_proc *proc)
 
 	i = 0;
 	count = count_valid_cmd(proc);
+	dup2(proc->f_out, STDOUT_FILENO);
+	dup2(proc->f_in, STDIN_FILENO);
+	close(proc->f_out);
+	close(proc->f_in);
 	while (i < proc->cmds_count)
 	{
 		if (!proc->cmds[i]->error)
@@ -98,12 +118,12 @@ void	exec_childs(t_proc *proc)
 			if (count == 1)
 				fork_single_child(proc, i);
 			else if (i == 0)
-				fork_first_child(proc);
+				fork_first_child(proc, i);
 			else if (i == proc->cmds_count - 1)
 				fork_last_child(proc, i);
 			else
 				fork_middle_child(proc, i);
-		}
+		}		
 		i++;
 	}
 	wait_childs(proc);
@@ -119,9 +139,9 @@ void	execute(t_proc *proc, int32_t i)
 		write_msg(STDERR_FILENO, "\n");
 		free_exit(EXIT_FAILURE);
 	}
-	if (execve(proc->cmds[i]->full_path_cmd,
-				proc->cmds[i]->args,
-				proc->envp) == -1)
+	if (proc->command_found && execve(proc->cmds[i]->args[0],
+			proc->cmds[i]->args,
+			proc->envp) == -1)
 	{
 		write_msg(STDERR_FILENO, "Could not execve command: ");
 		write_msg(STDERR_FILENO, proc->cmds[i]->cmd);

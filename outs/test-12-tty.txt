@@ -1,0 +1,2 @@
+Command not found: not-executable
+scripts/test_utils.sh: line 19: 38796 Terminated: 15          $MEMLEAKS "$@"

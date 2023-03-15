@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
             "args": [
-				"input", "sleep 3", "wc -l", "output" 
+				"assets/deepthought.txt", "notexisting", "wc", "outs/test-xx.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
@@ -17,15 +17,16 @@
             "preLaunchTask": "pipex"
         },
         {
-            "name": "pipex bonus",
+            "name": "pipex_bonus",
             "type": "cppdbg",
             "request": "launch",
             //"program": "ARG='10 7 8 2 3 6 1 4 9 5'; {workspaceFolder}/push_swap $ARG | {workspaceFolder}/push_swap_checker $ARG",
             "program": "${workspaceFolder}/pipex_bonus",
             "args": [
+                "assets/deepthought.txt", "cat", "not-executable", "wc", "outs/test-xx.txt"
             ],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",

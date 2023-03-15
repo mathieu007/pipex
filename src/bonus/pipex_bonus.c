@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/12 15:05:12 by math             ###   ########.fr       */
+/*   Updated: 2023/03/15 18:05:22 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,23 @@ void	write_line(char *sep, int32_t fd_in, int32_t fd_out)
 	char	*line;
 	int32_t	sep_len;
 
-	close(fd_in);
 	sep_len = ft_strlen(sep);
-	line = get_next_line_temp(STDIN_FILENO);
+	line = get_next_line(STDIN_FILENO);
 	while (line)
 	{
 		if (ft_strncmp(line, sep, sep_len) == 0)
+		{
+			close(fd_in);
+			close(fd_out);
 			exit(EXIT_SUCCESS);
+		}
 		write(fd_out, line, ft_strlen(line));
-		line = get_next_line_temp(STDIN_FILENO);
+		free(line);
+		line = get_next_line(STDIN_FILENO);
 	}
+	close(fd_in);
+	close(fd_out);
+	exit(EXIT_FAILURE);
 }
 
 void	here_doc(char *sep, int argc)
@@ -47,7 +54,6 @@ void	here_doc(char *sep, int argc)
 		usage_bonus();
 	if (pipe(fds) == -1)
 		free_err_exit(EXIT_FAILURE);
-	init_fds(fds, 0);
 	pid = fork();
 	if (pid == -1)
 		free_err_exit(EXIT_FAILURE);
@@ -55,25 +61,11 @@ void	here_doc(char *sep, int argc)
 		write_line(sep, fds[0], fds[1]);
 	else
 	{
-		close(fds[1]);
 		dup2(fds[0], STDIN_FILENO);
-		wait(NULL);
+		close(fds[1]);
+		close(fds[0]);
+		waitpid(pid, NULL, 0);
 	}
-}
-
-int32_t	open_files_bonus(t_proc *proc, int32_t argc, char **argv)
-{
-	int32_t	f_out;
-
-	if (proc->here_doc)
-	{
-		proc->here_doc = true;
-		f_out = open(proc->f_out_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
-		here_doc(argv[2], argc);
-	}
-	else
-		f_out = open_files(proc);
-	return (f_out);
 }
 
 int32_t	main(int32_t argc, char **argv, char **envp)
@@ -81,13 +73,24 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	t_proc	*proc;
 	int32_t	f_out;
 
+	proc = NULL;
 	if (argc < 6)
 		usage_bonus();
-	proc = init_data(argc, argv, envp);
-	f_out = open_files_bonus(proc, argc, argv);
-	pipe_childs(proc);
-	exec_childs(proc);
-	dup2(f_out, STDOUT_FILENO);
-	execute(proc, proc->cmds_count - 1);
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		f_out = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, 0777);
+		here_doc(argv[2], argc);
+	}
+	else
+	{
+		proc = init_data(argc, argv, envp);
+		f_out = open_files(proc);
+		pipe_childs(proc);
+		exec_childs(proc);
+	}
+	if (!proc->command_found)
+		free_exit(EXIT_FAILURE);
+	else
+		free_all();
 	return (0);
 }
