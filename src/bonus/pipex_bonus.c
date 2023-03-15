@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/15 18:05:22 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/15 18:43:17 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	write_line(char *sep, int32_t fd_in, int32_t fd_out)
 			close(fd_in);
 			close(fd_out);
 			exit(EXIT_SUCCESS);
-		}
+		}		
 		write(fd_out, line, ft_strlen(line));
 		free(line);
 		line = get_next_line(STDIN_FILENO);
@@ -53,10 +53,10 @@ void	here_doc(char *sep, int argc)
 	if (argc < 6)
 		usage_bonus();
 	if (pipe(fds) == -1)
-		free_err_exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
-		free_err_exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	if (pid == 0)
 		write_line(sep, fds[0], fds[1]);
 	else
@@ -64,7 +64,7 @@ void	here_doc(char *sep, int argc)
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[1]);
 		close(fds[0]);
-		waitpid(pid, NULL, 0);
+		wait(NULL);
 	}
 }
 
@@ -73,12 +73,13 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	t_proc	*proc;
 	int32_t	f_out;
 
+
 	proc = NULL;
 	if (argc < 6)
 		usage_bonus();
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
-		f_out = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, 0777);
+		f_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
 		here_doc(argv[2], argc);
 	}
 	else
@@ -87,10 +88,10 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		f_out = open_files(proc);
 		pipe_childs(proc);
 		exec_childs(proc);
-	}
-	if (!proc->command_found)
-		free_exit(EXIT_FAILURE);
-	else
-		free_all();
+		if (!proc->command_found)
+			free_exit(EXIT_FAILURE);
+		else
+			free_all();
+	}	
 	return (0);
 }
