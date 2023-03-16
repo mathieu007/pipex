@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/15 18:54:29 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/16 07:15:33 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,19 @@ void	here_doc(char *sep, int argc)
 int32_t	main(int32_t argc, char **argv, char **envp)
 {
 	t_proc	*proc;
-	int32_t	f_out;
-
 
 	proc = NULL;
 	if (argc < 6)
 		usage_bonus();
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
-		f_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
+		open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
 		here_doc(argv[2], argc);
 	}
 	else
 	{
 		proc = init_data(argc, argv, envp);
-		f_out = open_files(proc);
+		open_files(proc);
 		pipe_childs(proc);
 		exec_childs(proc);
 		if (!proc->command_found)

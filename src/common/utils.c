@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/15 12:46:22 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/16 06:57:56 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,12 @@ int32_t	open_files(t_proc *proc)
 		write_msg(2, "\n");
 		free_exit(EXIT_FAILURE);
 	}
-	proc->f_in = open(proc->f_in_name, O_RDONLY, 0777);
-	proc->f_in_not_exist = false;
-	if (proc->f_in == -1)
-		open_temp_file(proc);
+	if (proc->here_doc)
+	{
+		proc->f_in = open(proc->f_in_name, O_RDONLY, 0777);
+		proc->f_in_not_exist = false;
+		if (proc->f_in == -1)
+			open_temp_file(proc);
+	}
 	return (proc->f_out);
 }

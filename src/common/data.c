@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: math <math@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/14 16:11:54 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/16 06:53:23 by math             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,17 @@ t_proc	*init_data(int32_t argc, char **argv, char **envp)
 	proc->pwd = parse_pwd(envp);
 	proc->paths = parse_paths(envp);
 	proc->envp = envp;
-	proc->f_in_name = get_file_name(argv[1], proc);
 	proc->f_out_name = get_file_name(argv[argc - 1], proc);
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
+		proc->f_in_name = NULL;
 		proc->here_doc = true;
 		proc->cmds_count = argc - 4;
 		proc->cmds = parse_cmds(proc, &argv[3], proc->cmds_count);
 	}
 	else
 	{
+		proc->f_in_name = get_file_name(argv[1], proc);
 		proc->here_doc = false;
 		proc->cmds_count = argc - 3;
 		proc->cmds = parse_cmds(proc, &argv[2], proc->cmds_count);
