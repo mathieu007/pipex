@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:40:18 by math              #+#    #+#             */
-/*   Updated: 2023/03/16 10:36:26 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/17 08:55:14 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int32_t	open_files(t_proc *proc)
 	int32_t	out_flags;
 
 	proc->f_in_temp = false;
-	out_flags = O_WRONLY | O_CREAT;
+	out_flags = O_WRONLY | O_CREAT | O_CLOEXEC;
 	if (!proc->here_doc)
 	{
 		out_flags |= O_TRUNC;
-		proc->f_in = open(proc->f_in_name, O_RDONLY, 0777);
+		proc->f_in = open(proc->f_in_name, O_RDONLY | O_CLOEXEC, 0777);
 		if (proc->f_in == -1)
 			open_temp_file(proc);
 	}

@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:57:14 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/16 10:45:42 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/17 07:56:57 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	exec_childs(t_proc *proc)
 	dup2(proc->f_out, STDOUT_FILENO);
 	dup2(proc->f_in, STDIN_FILENO);
 	close(proc->f_out);
-	close(proc->f_in);
+	if (!proc->here_doc)
+		close(proc->f_in);
 	while (i < proc->cmds_count)
 	{
 		if (!proc->cmds[i]->error)

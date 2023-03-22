@@ -38,6 +38,7 @@ SRC	=	src/alloc_pool/data_pool.c	\
 		src/ft_strjoin.c	\
 		src/ft_strjoin_temp.c	\
 		src/ft_strstarwith.c	\
+		src/ft_streq.c	\
 		src/ft_strlcat.c	\
 		src/ft_strlcpy.c	\
 		src/ft_strncpy.c	\

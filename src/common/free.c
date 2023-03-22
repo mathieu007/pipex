@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/15 11:40:13 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/17 10:42:25 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,34 @@ static void	free_addr(char **addr)
 	{
 		free(*addr);
 		*addr = NULL;
+	}
+}
+
+void	close_fds(t_proc *proc, bool with_std_fd)
+{
+	int32_t	i;
+
+	i = 0;
+	if (proc->cmds)
+	{
+		while (proc->cmds[i])
+		{
+			if (proc->cmds[i]->file_in != -1)
+				close(proc->cmds[i]->file_in);
+			if (proc->cmds[i]->file_out != -1)
+				close(proc->cmds[i]->file_out);
+			i++;
+		}
+	}
+	if (proc->f_in != -1)
+		close(proc->f_in);
+	if (proc->f_out != -1)
+		close(proc->f_out);
+	if (with_std_fd)
+	{
+		close(0);
+		close(1);
+		close(2);
 	}
 }
 
@@ -85,4 +113,5 @@ void	free_all(void)
 	free_addr(&(proc->pwd));
 	if (proc->cmds != NULL)
 		free_cmds(proc);
+	close_fds(proc, true);
 }

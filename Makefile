@@ -40,6 +40,7 @@ SRC_COMMONS :=	src/common/data.c	\
 				src/common/cmd_parse.c	\
 				src/common/cmd_parse2.c	\
 				src/common/fork.c	\
+				src/common/open.c	\
 
 BONUS_SRC   :=	src/bonus/get_next_line.c	\
 				src/bonus/get_next_line_utils.c	\
@@ -54,50 +55,50 @@ all: directories bonus $(NAME) $(BONUS_NAME)
 remake: cleaner all
 	
 directories:
-	# mkdir -p $(TARGETDIR)
-	mkdir -p $(BUILDDIR)
-	mkdir -p $(BUILDDIR_BONUS)
-	mkdir -p $(BUILDDIR_COMMONS)
+	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILDDIR_BONUS)
+	@mkdir -p $(BUILDDIR_COMMONS)
 
 #Clean only Objecst
 clean:
-	$(RM) -rf $(BUILDDIR)
-	$(RM) -rf $(BUILDDIR_BONUS)
-	$(RM) -rf $(BUILDDIR_COMMONS)
-	$(MAKE) clean -C $(LIBFT_DIR)
-	$(RM) $(LIBFT_DIR)/$(LIBFT_FILE)
-	$(RM) $(NAME)
-	$(RM) $(BONUS_NAME)	
+	@$(RM) -rf $(BUILDDIR)
+	@$(RM) -rf $(BUILDDIR_BONUS)
+	@$(RM) -rf $(BUILDDIR_COMMONS)
+	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(RM) $(NAME)
+	@$(RM) $(BONUS_NAME)	
 
 #Full Clean, Objects and Binaries
 cleaner: clean
-	$(RM) -rf $(TARGETDIR)
+	@$(RM) -rf $(TARGETDIR)
 	
 fclean: clean
-	$(MAKE) fclean -C $(LIBFT_DIR)
-	$(RM) $(LIBFT)
+	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(RM) $(LIBFT)
 	
 bonus: $(OBJECTS) $(OBJECTS_BONUS)
 
+re:	fclean all
+
 #Link
 $(NAME): $(OBJECTS) 
-	$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -o $(NAME) $^ $(LIBFT)
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -o $(NAME) $^ $(LIBFT)
 
 $(BONUS_NAME): $(OBJECTS_BONUS)
-	$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -o $(BONUS_NAME) $^ $(LIBFT)
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -o $(BONUS_NAME) $^ $(LIBFT)
 
 $(BUILDDIR_COMMONS)/%.$(OBJEXT): $(COMMONSDIR)/%.$(SRCEXT)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -c -o $@ $<
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -c -o $@ $<
 
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -c -o $@ $<
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -c -o $@ $<
 
 $(BUILDDIR_BONUS)/%.$(OBJEXT): $(BONUSDIR)/%.$(SRCEXT)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -c -o $@ $<
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLIBFTDEP) $(INCDEP) -c -o $@ $<
 
 .PHONY: bonus all remake clean cleaner resources

@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:02:59 by math              #+#    #+#             */
-/*   Updated: 2023/03/16 12:24:07 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/17 07:56:11 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	write_line(char *sep, int32_t fd_in, int32_t fd_out)
 	while (line)
 	{
 		if (ft_strncmp(line, sep, sep_len) == 0 && line[sep_len] == '\n')
-		{
+		{		
 			close(fd_in);
 			close(fd_out);
 			exit(EXIT_SUCCESS);

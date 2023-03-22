@@ -6,7 +6,7 @@
 /*   By: mroy <mroy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:21:35 by mroy              #+#    #+#             */
-/*   Updated: 2023/03/16 09:18:54 by mroy             ###   ########.fr       */
+/*   Updated: 2023/03/17 09:23:46 by mroy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void		fork_first_child(t_proc *proc, int32_t i);
 void		fork_single_child(t_proc *proc, int32_t i);
 void		fork_last_child(t_proc *proc, int32_t i);
 void		fork_middle_child(t_proc *proc, int32_t i);
+void		close_fds(t_proc *proc, bool with_std_fd);
 
 #endif
